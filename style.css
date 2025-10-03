@@ -1,115 +1,130 @@
+/* General page styles */
 body {
   font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #667eea, #764ba2);
   margin: 0;
   padding: 0;
+  background: #f5f5f5;
+  color: #333;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  transition: background 0.3s, color 0.3s;
 }
 
-.container {
-  max-width: 500px;
-  width: 90%;
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-  text-align: center;
-}
-
-h1, h2 {
-  margin-bottom: 15px;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.course {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.course input, .course select {
-  flex: 1;
-  padding: 8px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-}
-
-button {
-  padding: 10px;
-  border: none;
-  background: #007BFF;
-  color: white;
-  font-size: 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: transform 0.2s, background 0.2s;
-}
-
-button:hover {
-  transform: scale(1.05);
-  background: #0056b3;
-}
-
-#result {
-  margin-top: 20px;
-  font-weight: bold;
-}
-
-.progress-bar {
-  width: 100%;
-  height: 20px;
-  background: #eee;
-  border-radius: 10px;
-  margin-top: 15px;
-  overflow: hidden;
-}
-
-#progress {
-  height: 100%;
-  width: 0;
-  background: green;
-  transition: width 0.5s, background 0.5s;
-}
-
-/* Dark Mode */
+/* Dark mode with stars */
 body.dark {
-  background: #121212;
+  background: black;
   color: white;
+}
+
+.space {
+  display: none;
+}
+
+body.dark .space {
+  display: block;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.starfield {
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background: transparent url('https://www.transparenttextures.com/patterns/stardust.png') repeat;
+  animation: moveStars 100s linear infinite;
+}
+
+@keyframes moveStars {
+  from { transform: translateY(0); }
+  to { transform: translateY(-1000px); }
+}
+
+/* Container */
+.container {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  width: 90%;
+  max-width: 500px;
+  text-align: center;
 }
 
 body.dark .container {
   background: #1e1e1e;
-  color: white;
-  box-shadow: 0 8px 20px rgba(255,255,255,0.1);
 }
 
-body.dark input, 
-body.dark select {
-  background: #2a2a2a;
-  color: white;
-  border: 1px solid #444;
+/* Buttons */
+button {
+  padding: 10px 15px;
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-body.dark button {
+.primary {
+  background: #007bff;
+  color: white;
+}
+
+.ghost {
+  background: #ddd;
+  color: #333;
+}
+
+.toggle {
   background: #444;
+  color: white;
 }
 
-body.dark button:hover {
-  background: #666;
+/* Inputs */
+input, select {
+  padding: 10px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
-/* Responsive */
-@media (max-width: 600px) {
-  .course {
-    flex-direction: column;
-  }
+/* Progress bar */
+.progress-bar {
+  width: 100%;
+  height: 20px;
+  background: #ddd;
+  border-radius: 10px;
+  margin-top: 1rem;
+}
+
+#progress {
+  height: 100%;
+  width: 0%;
+  border-radius: 10px;
+  transition: width 0.5s ease, background 0.5s ease;
+}
+
+/* Popups */
+.popup {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  display: none;
+  z-index: 10;
+}
+
+.popup img {
+  width: 120px;
+}
+
+.popup.right {
+  right: 10px;
+}
+
+.popup.left {
+  left: 10px;
 }
