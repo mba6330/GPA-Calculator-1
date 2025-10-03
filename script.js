@@ -1,83 +1,130 @@
-// Load saved courses on page load
-window.onload = function() {
-  let savedCourses = JSON.parse(localStorage.getItem("courses")) || [];
-  savedCourses.forEach(course => addCourse(course));
-};
-
-// Add new course input row
-document.getElementById("addCourse").addEventListener("click", function() {
-  addCourse();
-});
-
-function addCourse(saved = null) {
-  let courseDiv = document.createElement("div");
-  courseDiv.classList.add("course");
-  courseDiv.innerHTML = `
-    <input type="text" placeholder="Course Name" value="${saved ? saved.name : ""}">
-    <input type="number" class="credits" placeholder="Credits" min="1" value="${saved ? saved.credits : ""}">
-    <select class="grade">
-      <option value="4" ${saved?.grade == 4 ? "selected" : ""}>A</option>
-      <option value="3.7" ${saved?.grade == 3.7 ? "selected" : ""}>A-</option>
-      <option value="3.3" ${saved?.grade == 3.3 ? "selected" : ""}>B+</option>
-      <option value="3" ${saved?.grade == 3 ? "selected" : ""}>B</option>
-      <option value="2.7" ${saved?.grade == 2.7 ? "selected" : ""}>B-</option>
-      <option value="2.3" ${saved?.grade == 2.3 ? "selected" : ""}>C+</option>
-      <option value="2" ${saved?.grade == 2 ? "selected" : ""}>C</option>
-      <option value="1.7" ${saved?.grade == 1.7 ? "selected" : ""}>C-</option>
-      <option value="1" ${saved?.grade == 1 ? "selected" : ""}>D</option>
-      <option value="0" ${saved?.grade == 0 ? "selected" : ""}>F</option>
-    </select>
-  `;
-  document.getElementById("courses").appendChild(courseDiv);
+/* General page styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f5f5f5;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
-// Calculate GPA
-document.getElementById("gpaForm").addEventListener("submit", function(e) {
-  e.preventDefault();
-  let credits = document.querySelectorAll(".credits");
-  let grades = document.querySelectorAll(".grade");
-  let names = document.querySelectorAll(".course input[type='text']");
+/* Dark mode with stars */
+body.dark {
+  background: black;
+  color: white;
+}
 
-  let totalCredits = 0;
-  let totalPoints = 0;
-  let coursesToSave = [];
+.space {
+  display: none;
+}
 
-  for (let i = 0; i < credits.length; i++) {
-    let credit = parseFloat(credits[i].value);
-    let grade = parseFloat(grades[i].value);
-    let name = names[i].value;
+body.dark .space {
+  display: block;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
 
-    if (!isNaN(credit) && !isNaN(grade)) {
-      totalCredits += credit;
-      totalPoints += credit * grade;
-      coursesToSave.push({ name, credits: credit, grade });
-    }
-  }
+.starfield {
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background: transparent url('https://www.transparenttextures.com/patterns/stardust.png') repeat;
+  animation: moveStars 100s linear infinite;
+}
 
-  localStorage.setItem("courses", JSON.stringify(coursesToSave));
+@keyframes moveStars {
+  from { transform: translateY(0); }
+  to { transform: translateY(-1000px); }
+}
 
-  let gpa = totalCredits > 0 ? (totalPoints / totalCredits).toFixed(2) : 0;
+/* Container */
+.container {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  width: 90%;
+  max-width: 500px;
+  text-align: center;
+}
 
-  // Update result
-  let resultEl = document.getElementById("result");
-  resultEl.textContent = "Your GPA: " + gpa;
+body.dark .container {
+  background: #1e1e1e;
+}
 
-  // Color code GPA
-  let progress = document.getElementById("progress");
-  progress.style.width = (gpa / 4) * 100 + "%";
-  if (gpa >= 3.5) {
-    resultEl.style.color = "green";
-    progress.style.background = "green";
-  } else if (gpa >= 2.0) {
-    resultEl.style.color = "orange";
-    progress.style.background = "orange";
-  } else {
-    resultEl.style.color = "red";
-    progress.style.background = "red";
-  }
-});
+/* Buttons */
+button {
+  padding: 10px 15px;
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
-// Dark mode toggle
-document.getElementById("toggleDark").addEventListener("click", function() {
-  document.body.classList.toggle("dark");
-});
+.primary {
+  background: #007bff;
+  color: white;
+}
+
+.ghost {
+  background: #ddd;
+  color: #333;
+}
+
+.toggle {
+  background: #444;
+  color: white;
+}
+
+/* Inputs */
+input, select {
+  padding: 10px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Progress bar */
+.progress-bar {
+  width: 100%;
+  height: 20px;
+  background: #ddd;
+  border-radius: 10px;
+  margin-top: 1rem;
+}
+
+#progress {
+  height: 100%;
+  width: 0%;
+  border-radius: 10px;
+  transition: width 0.5s ease, background 0.5s ease;
+}
+
+/* Popups */
+.popup {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  display: none;
+  z-index: 10;
+}
+
+.popup img {
+  width: 120px;
+}
+
+.popup.right {
+  right: 10px;
+}
+
+.popup.left {
+  left: 10px;
+}
