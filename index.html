@@ -1,27 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>GPA Calculator</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
+  <!-- Space background (only in dark mode) -->
+  <div class="space" aria-hidden="true">
+    <div class="starfield s1"></div>
+    <div class="starfield s2"></div>
+    <div class="starfield s3"></div>
+  </div>
+
   <div class="container">
-    <h1>GPA Calculator</h1>
-    <button id="toggleDark">🌙 Toggle Dark Mode</button>
+    <div class="header">
+      <h1>GPA Calculator</h1>
+      <button id="toggleDark" class="toggle">🌙 Dark Mode</button>
+    </div>
 
     <form id="gpaForm">
       <div id="courses"></div>
-      <button type="button" id="addCourse">+ Add Course</button>
-      <button type="submit">Calculate GPA</button>
+
+      <div class="actions">
+        <button type="button" id="addCourse">+ Add Course</button>
+        <button type="submit" class="primary">Calculate GPA</button>
+        <button type="button" id="clearAll" class="ghost">Reset</button>
+      </div>
     </form>
 
     <h2 id="result">Your GPA: 0</h2>
+
     <div class="progress-bar">
-      <div id="progress"></div>
-    </div>
-  </div>
-  <script src="script.js"></script>
-</body>
-</html>
+      <div id="progress"><
