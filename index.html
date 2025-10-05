@@ -7,7 +7,18 @@
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-  <!-- Space background (only in dark mode) -->
+  <!-- Sunrise scene (light mode only) -->
+  <div class="scene" aria-hidden="true">
+    <div class="sun"></div>
+    <div class="clouds">
+      <div class="cloud c1"></div>
+      <div class="cloud c2"></div>
+      <div class="cloud c3"></div>
+    </div>
+    <div class="hills"></div>
+  </div>
+
+  <!-- Stars (dark mode only) -->
   <div class="space" aria-hidden="true">
     <div class="starfield s1"></div>
     <div class="starfield s2"></div>
@@ -24,8 +35,14 @@
       <div id="courses"></div>
 
       <div class="actions">
-        <button type="button" id="addCourse">+ Add Course</button>
-        <button type="submit" class="primary">Calculate GPA</button>
+        <button type="button" id="addCourse" class="secondary">+ Add Course</button>
+      </div>
+
+      <div class="actions">
+        <button type="submit" id="calculateBtn" class="primary">Calculate GPA</button>
+      </div>
+
+      <div class="actions">
         <button type="button" id="clearAll" class="ghost">Reset</button>
       </div>
     </form>
@@ -37,20 +54,18 @@
     </div>
   </div>
 
-  <!-- Win / Lose popups -->
-  <div id="popupWin" class="popup right">
-    <img src="assets/mario.png" alt="Mario celebrating"/>
-  </div>
-
-  <div id="popupLose" class="popup left">
-    <img src="assets/sad.jpg" alt="Sad face"/>
-  </div>
+  <!-- Popups -->
+  <img id="marioPopup" class="popup" src="assets/mario.png" alt="Mario"/>
+  <img id="sadPopup" class="popup" src="assets/sad.jpg" alt="Sad face"/>
 
   <!-- Sounds -->
   <audio id="audioWin" src="assets/yahoo.mp3" preload="auto"></audio>
   <audio id="audioLose" src="assets/sadtrombone.mp3" preload="auto"></audio>
 
-  <!-- Important: load JavaScript -->
+  <!-- Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <!-- App JS -->
   <script src="script.js"></script>
 </body>
 </html>
